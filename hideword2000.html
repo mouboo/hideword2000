@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <style>
+        #myarea {
+            border:1px solid #000;
+            padding:5px; 
+            height:400px;
+            width:80%;
+            overflow:scroll; 
+            line-height: 1.4em;
+        }
+        form {
+            display:inline;
+            margin:0;
+            padding:0;
+        }
+        input {
+            text-align:center;
+            box-shadow: none !important;
+            border: 1px solid #ccc !important;
+        }
+        button {
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px;
+        }
+    </style>
+
+    <script>
+        function getSelectionHtml() {
+            var sel, range, node;
+            if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.getRangeAt && sel.rangeCount) {
+                    range = window.getSelection().getRangeAt(0);
+            
+                    var html = '<form><input type="text" size="10" id="' + range + '" onchange="validate(this);"></form>'
+                    range.deleteContents();
+            
+                    var el = document.createElement("div");
+                    el.innerHTML = html;
+                    var frag = document.createDocumentFragment(), node, lastNode;
+                    while ( (node = el.firstChild) ) {
+                    lastNode = frag.appendChild(node);
+                    }
+                    range.insertNode(frag);
+                }
+            } else if (document.selection && document.selection.createRange) {
+                range = document.selection.createRange();
+                range.collapse(false);
+                range.pasteHTML(html);
+            }
+        }
+        
+        function validate(s) {
+            if (s.id == s.value) {
+                document.getElementById(s.id).style.backgroundColor = "lightgreen";
+            } else {
+                document.getElementById(s.id).style.backgroundColor = "white";
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <button onclick="getSelectionHtml();">Hide word</button>
+    <div id="myarea" contenteditable="true">
+    Enter and edit text in this area. <br />
+    Select a word and press the "Hide word" button, this will replace the word with an input box. <br />
+    If you enter the hidden word in the input box, the box will turn green. <br /> 
+    </div>
+</body>
+</html>
