@@ -82,12 +82,9 @@
             var element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
             element.setAttribute('download', filename);
-
             element.style.display = 'none';
             document.body.appendChild(element);
-
             element.click();
-
             document.body.removeChild(element);
         }
         function getPageHTML() {
@@ -105,8 +102,5 @@
     Select a word and press the "Hide word" button, this will replace the word with an input box. <br />
     If you enter the hidden word in the input box, the box will turn green. <br /> 
     </div>
-
-
-
 </body>
 </html>
